@@ -1,18 +1,18 @@
-import '../css/app.css';
+import '../../css/app.css';
 
+import { appConfig } from '@/app/config';
+import { env } from '@/app/lib';
+import { initializeTheme } from '@/hooks/use-appearance';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
-import { initializeTheme } from './hooks/use-appearance';
-
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    title: (title) => (title ? `${title} - ${env.appName}` : env.appName),
     resolve: (name) =>
         resolvePageComponent(
-            `./pages/${name}.tsx`,
-            import.meta.glob('./pages/**/*.tsx'),
+            `../Pages/${name}.tsx`,
+            import.meta.glob('../Pages/**/*.tsx'),
         ),
     setup({ el, App, props }) {
         const root = createRoot(el);
@@ -20,7 +20,7 @@ createInertiaApp({
         root.render(<App {...props} />);
     },
     progress: {
-        color: '#4B5563',
+        color: appConfig.progressColor,
     },
 });
 
